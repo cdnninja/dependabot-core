@@ -1,3 +1,4 @@
+# shellcheck shell=bash
 export LOCAL_IMAGE="dependabot/updater:latest"
 export GPR_IMAGE="docker.pkg.github.com/dependabot/dependabot-updater/dependabot-updater"
 
@@ -6,7 +7,7 @@ function docker_build() {
 
   extract_version
 
-  docker build $DOCKER_BUILD_ARGS -f Dockerfile.updater -t "$LOCAL_IMAGE" --build-arg OMNIBUS_VERSION=$OMNIBUS_VERSION .
+  docker build $DOCKER_BUILD_ARGS -f Dockerfile.updater -t "$LOCAL_IMAGE" --build-arg OMNIBUS_VERSION="$OMNIBUS_VERSION" .
 
   # Verify max layers; an AUFS limit that was _crucial_ on Heroku (but not now)
   IMAGE_LAYERS=$(docker history -q "$LOCAL_IMAGE" | wc -l | sed -e 's/ //g')
