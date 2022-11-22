@@ -173,7 +173,7 @@ RSpec.describe Dependabot::Bundler::UpdateChecker::VersionResolver do
 
         let(:dependency_files) { bundler_project_dependency_files("requires_bundler") }
 
-        pending "resolves version" do
+        it "resolves version" do
           expect(subject.version).to eq(Gem::Version.new("3.0.0"))
         end
       end
@@ -184,7 +184,7 @@ RSpec.describe Dependabot::Bundler::UpdateChecker::VersionResolver do
 
         let(:dependency_files) { bundler_project_dependency_files("requires_bundler") }
 
-        pending "raises a DependencyFileNotResolvable error" do
+        it "raises a DependencyFileNotResolvable error" do
           expect { subject }.
             to raise_error(Dependabot::DependencyFileNotResolvable)
         end
