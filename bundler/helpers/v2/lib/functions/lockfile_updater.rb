@@ -50,7 +50,7 @@ module Functions
         definition.to_lock
       rescue Bundler::GemNotFound => e
         unlock_yanked_gem(dependencies_to_unlock, e) && retry
-      rescue Bundler::VersionConflict => e
+      rescue Bundler::SolveFailure => e
         unlock_blocking_subdeps(dependencies_to_unlock, e) && retry
       rescue *RETRYABLE_ERRORS
         raise if @retrying

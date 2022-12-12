@@ -18,13 +18,15 @@ else
     "$install_dir"
 fi
 
-cd "$install_dir"
-
-default_version=$(ruby -rbundler -e'print Bundler::VERSION')
-
 export GEM_HOME=$install_dir/.bundle
 
-gem install bundler -v "$default_version" --no-document
+git clone --single-branch --depth 1 --branch 3.4 https://github.com/rubygems/rubygems /tmp/rubygems
+cd /tmp/rubygems/bundler
+BUNDLER_SPEC_SUB_VERSION=2.4.0 rake override_version
+rake install
+
+cd "$install_dir"
+rm -rf /tmp/rubygems
 
 bundle config --local path.system true
 

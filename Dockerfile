@@ -74,8 +74,6 @@ ARG RUBY_VERSION=3.1.3
 ARG RUBY_INSTALL_VERSION=0.8.5
 
 ARG BUNDLER_V1_VERSION=1.17.3
-# When bumping Bundler, need to also regenerate `updater/Gemfile.lock` via `bundle update --bundler`
-ARG BUNDLER_V2_VERSION=2.3.25
 ENV BUNDLE_SILENCE_ROOT_WARNING=1
 # Allow gem installs as the dependabot user
 ENV BUNDLE_PATH=".bundle"
@@ -89,8 +87,12 @@ RUN mkdir -p /tmp/ruby-install \
  && make \
  && ./bin/ruby-install --system --cleanup ruby $RUBY_VERSION -- --disable-install-doc \
  && gem install bundler -v $BUNDLER_V1_VERSION --no-document \
- && gem install bundler -v $BUNDLER_V2_VERSION --no-document \
+ && git clone --single-branch --depth 1 --branch 3.4 https://github.com/rubygems/rubygems /tmp/rubygems \
+ && cd /tmp/rubygems/bundler \
+ && BUNDLER_SPEC_SUB_VERSION=2.4.0 rake override_version \
+ && rake install \
  && rm -rf /var/lib/gems/*/cache/* \
+ && rm -rf /tmp/rubygems \
  && rm -rf /tmp/ruby-install
 
 
