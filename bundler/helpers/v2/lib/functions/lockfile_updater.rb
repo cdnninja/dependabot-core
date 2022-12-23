@@ -174,7 +174,7 @@ module Functions
       return dependencies_to_unlock.append(*potentials_deps) if potentials_deps.any?
 
       # Fall back to unlocking *all* sub-dependencies. This is required
-      # because Bundler's VersionConflict objects don't include enough
+      # because Bundler's SolveFailure objects don't include enough
       # information to chart the full path through all conflicts unwound
       dependencies_to_unlock.append(*allowed_new_unlocks)
     end
