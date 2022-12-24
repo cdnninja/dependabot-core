@@ -87,7 +87,7 @@ RUN mkdir -p /tmp/ruby-install \
  && make \
  && ./bin/ruby-install --system --cleanup ruby $RUBY_VERSION -- --disable-install-doc \
  && gem install bundler -v $BUNDLER_V1_VERSION --no-document \
- && git clone --single-branch --depth 1 --branch one-more-fix https://github.com/rubygems/rubygems /tmp/rubygems \
+ && git clone --single-branch --depth 1 --branch restore-annotated-git-tag-support https://github.com/rubygems/rubygems /tmp/rubygems \
  && cd /tmp/rubygems/bundler \
  && BUNDLER_SPEC_SUB_VERSION=2.4.0 rake override_version \
  && rake install \
