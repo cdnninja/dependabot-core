@@ -26,6 +26,9 @@ module Dependabot
 
         # If this repo is using pyproject.toml return true
         return true if filenames.include?("pyproject.toml")
+        
+        # If there is a home assistant manifest.json return true
+        return true if filenames.include?("manifest.json")
 
         return true if filenames.include?("setup.py")
 
